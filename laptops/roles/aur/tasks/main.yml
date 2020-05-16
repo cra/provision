@@ -1,0 +1,30 @@
+---
+
+- name: create aur_builder
+  user:
+    name: aur_builder
+    group: wheel
+
+- name: add aur_builder explicitly to sudo
+  lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: yes
+    validate: 'visudo -cf %s'
+
+- name: install yay
+  aur:
+    name: yay
+    use: makepkg
+    skip_installed: true
+  become: yes
+  become_user: aur_builder
+
+- name: install aur packages
+  aur:
+    name:
+      - batterymon-clone
+      - fluxgui
+      - xbindkeys
+  become: yes
+  become_user: aur_builder

@@ -1,0 +1,45 @@
+[user]
+  email = c6h10o5@gmail.com
+  name = Igor Mosyagin
+[alias]
+  commit = commit -v
+  st = status -s
+  sta = status
+  dad = add
+  sat = status
+  tstat = status
+  stat = status
+  satt = status
+  saat = status
+  ls = ls-files
+  lg = log --graph --pretty=format:'%Cred%h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  diffc = diff --cached
+  dfifc = diff --cached
+  checkotu = checkout
+  checkour = checkout
+  dif = diff
+  dfif = diff
+  dfi = diff
+  comit = commit
+  vers = !git describe --tags --dirty || git rev-parse --short HEA
+  psuh = push
+  cloen = clone
+  stash-unapply = !git stash show -p | git apply -R
+  chmapl = !git checkout master && git pull && git fetch -p
+[push]
+  default = simple
+[color]
+  ui = true
+  branch = true
+  diff = true
+[merge]
+  conflictstyle = diff3
+[init]
+  templatedir = ~/.git_template
+[rebase]
+  autoStash = true
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
