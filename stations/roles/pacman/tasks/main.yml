@@ -1,0 +1,149 @@
+---
+
+- name: update/upgrade pacman
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  when: run_full_system_upgrade
+
+- name: install cli packages
+  pacman:
+    pkg:
+      - base-devel
+      - bat
+      - bc
+      - exa
+      - git
+      - htop
+      - iputils
+      - lshw
+      - sshfs
+      - tmux
+      - net-tools
+    state: present
+
+- name: add fonts
+  pacman:
+    pkg:
+      - terminus-font
+      - otf-fira-code
+    state: present
+
+- name: uninstall vim to replace it with neovim
+  pacman:
+    pkg:
+      - vim
+    state: absent
+
+- name: install x11org packages
+  pacman:
+    pkg:
+      - awesome
+      - evince
+      - gvim
+      - i3lock
+      - neovim
+      - networkmanager
+      - network-manager-applet
+      - noto-fonts-emoji
+      - otf-fira-code
+      - parcellite
+      - powerline-vim
+      - terminus-font
+      - termite
+      - transmission-gtk
+      - udiskie
+      - xorg-server
+      - xorg-setxkbmap
+      - xorg-xev
+      - xorg-xinit
+      - xorg-xmodmap
+      - xorg-xrandr
+      - xorg-xrdb
+      - xorg-xset
+      - xf86-video-nouveau
+    state: present
+
+- name: install browsers
+  pacman:
+    pkg:
+      - code
+      - firefox
+    state: present
+
+- name: блютуз де??
+  pacman:
+    pkg:
+      - bluez
+      - bluez-utils
+      - blueman
+    state: present
+  when: i_haz_bluetooth
+
+- name: install python stuff
+  pacman:
+    pkg:
+      - flake8
+      - ipython
+      - jupyter
+      - python-black
+      - python-pip
+      - python-poetry
+    state: present
+
+- name: install python convenience packages themes
+  pip:
+    name:
+      - aiohttp
+      - aioredis
+      - jupyterthemes
+      - pyyaml
+      - rich
+      - rq
+      - rq-dashboard
+      - ujson
+
+- name: install docker
+  pacman:
+    pkg:
+      - docker
+      - docker-compose
+    state: present
+
+- name: add multilib раз
+  lineinfile:
+    dest: "/etc/pacman.conf"
+    state: "present"
+    line: "[multilib]"
+    regexp: "^\\[multilib\\]"
+    insertafter: "^#\\[multilib\\]"
+
+- name: add multilib два
+  lineinfile:
+    dest: "/etc/pacman.conf"
+    state: "present"
+    line: "Include = /etc/pacman.d/mirrorlist"
+    insertafter: "^\\[multilib\\]"
+    regexp: "Include = /etc/pacman.d/mirrorlist"
+
+- name: refresh local db
+  pacman:
+    update_cache: yes
+
+- name: enable services
+  systemd:
+    enabled: yes
+    name: NetworkManager
+
+- name: enable bluetooth as well
+  systemd:
+    enabled: yes
+    name: bluetooth
+  when: i_haz_bluetooth
+
+- name: gaming eh
+  pacman:
+    pkg:
+      - steam
+    state: present
+  when: install_steam_also

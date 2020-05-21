@@ -1,0 +1,60 @@
+---
+
+- name: copy user settings
+  copy:
+    src: "{{ item }}"
+    dest: "/home/{{ my_username }}/.{{ item }}"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: '0755'
+  with_items:
+    - Xresources-colors
+    - xmodmap
+    - xinitrc
+    - gitconfig
+    - bashrc
+
+- name: ensure local bin directory exists
+  file:
+    path: "/home/{{ my_username }}/.local/bin"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: '0755'
+    state: directory
+    recurse: true
+
+- name: copy kbfix script
+  copy:
+    src: kbfix-script
+    dest: "/home/{{ my_username }}/.local/bin/kbfix.sh"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: '0755'
+
+- name: ensure config directories exist
+  file:
+    path: "/home/{{ my_username }}/.config/{{ item }}"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: '0755'
+    state: directory
+    recurse: true
+  with_items:
+    - awesome
+    - parcellite
+
+- name: copy awesome config
+  copy:
+    src: awesome-rc.lua
+    dest: "/home/{{ my_username }}/.config/awesome/rc.lua"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: '0755'
+
+- name: copy parcellite config
+  copy:
+    src: parcelliterc
+    dest: "/home/{{ my_username }}/.config/parcellite/parcelliterc"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: '0666'

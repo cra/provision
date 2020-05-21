@@ -1,0 +1,54 @@
+---
+
+- name: create my user
+  user:
+    name: "{{ my_username }}"
+    shell: /bin/bash
+    createhome: yes
+
+- name: make sure we have 'wheel' group
+  group:
+    name: wheel
+    state: present
+
+- name: install sudo
+  pacman:
+    pkg: sudo
+    state: present
+
+- name: allow 'wheel' to run sudo passwordless sudo commands
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: add sudoers users to wheel group
+  user:
+    name: "{{ my_username }}"
+    groups: wheel
+    append: yes
+    state: present
+
+- name: add ssh keys
+  authorized_key:
+    user: "{{ my_username }}"
+    state: present
+    key: "{{ ssh_keys }}"
+
+- name: ensure terminfo directory exists
+  file:
+    path: "/home/{{ my_username }}/.terminfo/x"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"
+    mode: 0755
+    state: directory
+    recurse: true
+
+- name: copy terminfo
+  copy:
+    src: xterm-termite
+    dest: "/home/{{ my_username }}/.terminfo/x/xterm-termite"
+    owner: "{{ my_username }}"
+    group: "{{ my_username }}"

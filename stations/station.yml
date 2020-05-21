@@ -1,0 +1,19 @@
+---
+- name: Setup station
+  hosts: station
+  become: yes
+  become_method: sudo
+  vars:
+    my_username: shrimpsizemoose
+    ssh_keys: https://github.com/cra.keys
+    ansible_python_interpreter: "/usr/bin/python3.8"
+    run_full_system_upgrade: false
+    i_haz_bluetooth: true
+    install_steam_also: true
+  roles:
+    # - base
+    - pacman
+    - aur
+    - role: user-settings
+      become: yes
+      become_user: "{{ my_username }}"

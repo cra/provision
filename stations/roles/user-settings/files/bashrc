@@ -1,0 +1,115 @@
+#!/bin/bash
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+export PATH="$PATH:/home/shrimpsizemoose/.local/bin"
+
+alias c=code
+alias cat="bat --theme 'Solarized (light)'"
+alias ccat="/bin/cat"
+alias ls='exa --color=auto --classify'
+
+alias grep="grep --color=auto"
+alias psg='ps ax | grep -i'
+alias egrep="egrep --color=auto"
+alias gerp=grep
+alias watch="watch --color"
+alias gitk="gitk --all"
+
+alias tmu="tmux"
+
+alias bc="bc -l -q"
+
+alias black='black -S'
+
+alias connect-vpn-lamoda="nmcli connect up 'Lamoda VPN USE THIS'"
+
+#alias ipython=ptpython
+alias ipython="ipython --pprint --no-banner --no-confirm-exit --term-title"
+alias ipythno=ipython
+alias ipthyno=ipython
+alias ipytnho=ipython
+alias ipytthon=ipython
+alias ipyth=ipython
+alias келоды='xkb-switch -s "us(dvp)" && ipython'
+
+alias pythno=python
+alias pytho=python
+alias pyhton=python
+alias phtyno=python
+alias pthyno=python
+alias pytnho=python
+alias pyth=python
+alias pyoth=python
+alias pyotoh=python
+alias pyothon=python
+alias pyton=python
+
+alias evinec=evince
+alias gi=git
+alias amend='git commit --amend'
+
+function nginx_this_dir() {
+  bind_port=${1:8088}
+  docker run -p ${bind_port}:80 -v $(pwd):/usr/share/nginx/html nginx
+}
+
+function kto-zazhal() {
+   sudo netstat -pna | head -n1
+   sudo netstat -pna | grep $1
+}
+
+function fire-up-redis() {
+  docker run -d \
+    --rm \
+    --name shrimpsizeredis \
+    -p 31337:6379 \
+    redis:latest
+}
+
+function parse_git_branch() {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+PS1='[\u@\h]::[\[\033[01;33;4;44m\]\D{%H:%M:%S v%W[m%m]/%b%d}\[\033[00m\]] $(parse_git_branch) \w\n $ '
+
+
+function piy() {
+  ping -i 0.2 -f www.ya.ru
+  while true; do
+    ping www.ya.ru && echo "Sleep 1 sec" && sleep 1
+    ping www.ya.ru && echo "Sleep 1 sec" && sleep 1
+    ping www.ya.ru && echo "Sleep 5 sec" && sleep 5
+  done
+}
+alias pi=piy
+alias iy=piy
+
+alias docker-watch-images="watch docker image ls -a"
+alias docker-watch-containers="watch docker ps -a"
+alias docker-watch-containers-fmt="watch docker ps -a --format \'table {{.Names}}\\\t{{.Image}}\\\t{{.Ports}}\\\t{{.Status}}\\\t{{.Command}}\'"
+
+function docker-bash-to-container() {
+  sudo docker exec -it $1 /bin/bash
+}
+
+function docker-container-network-info() {
+   docker inspect $1 | jq '.[0] | {IP: .NetworkSettings.Networks}'
+
+}
+
+alias jup="jupyter notebook"
+alias juplight="jt -t grade3 -fs 115 -altp -tfs 11 -nfs 115 -cellw 88% -T"
+alias jupdark="jt -t onedork -fs 95 -altp -tfs 11 -nfs 115 -cellw 88% -T"
+
+export VISUAL=vim
+export EDITOR=vim
+
+alias kbfix=~/.local/bin/kbfix.sh
+alias _=kbfix
+
+#powerline-daemon -q
+#POWERLINE_BASH_CONTINUATION=1
+#POWERLINE_BASH_SELECT=1
+#. /usr/share/powerline/bindings/bash/powerline.sh
