@@ -45,11 +45,13 @@
       - neovim
       - networkmanager
       - network-manager-applet
+      - noto-fonts-emoji
       - otf-fira-code
       - parcellite
       - powerline-vim
       - terminus-font
       - termite
+      - transmission-gtk
       - udiskie
       - xorg-server
       - xorg-setxkbmap
@@ -98,6 +100,22 @@
       - docker
       - docker-compose
     state: present
+
+- name: add multilib раз
+  lineinfile:
+    dest: "/etc/pacman.conf"
+    state: "present"
+    line: "[multilib]"
+    regexp: "^\\[multilib\\]"
+    insertafter: "^#\\[multilib\\]"
+
+- name: add multilib два
+  lineinfile:
+    dest: "/etc/pacman.conf"
+    state: "present"
+    line: "Include = /etc/pacman.d/mirrorlist"
+    insertafter: "^\\[multilib\\]"
+    regexp: "Include = /etc/pacman.d/mirrorlist"
 
 - name: enable services
   systemd:
