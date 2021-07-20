@@ -26,7 +26,8 @@
   pacman:
     pkg:
       - terminus-font
-      - otf-fira-code
+      - ttf-fira-code
+      - noto-fonts-emoji
     state: present
 
 - name: uninstall vim to replace it with neovim
@@ -45,12 +46,8 @@
       - neovim
       - networkmanager
       - network-manager-applet
-      - noto-fonts-emoji
-      - otf-fira-code
       - parcellite
       - powerline-vim
-      - terminus-font
-      - termite
       - transmission-gtk
       - udiskie
       - xorg-server

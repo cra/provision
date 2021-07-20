@@ -1,2 +1,5 @@
-momo:
-	ansible-playbook momo.yml
+all: momo yay
+.PHONY: all
+
+%:
+	ansible-playbook $@.yml

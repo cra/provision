@@ -9,7 +9,6 @@
     mode: '0755'
   with_items:
     - Xresources-colors
-    - Xresources-fonts
     - xmodmap
     - xinitrc
     - gitconfig
