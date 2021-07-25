@@ -43,6 +43,8 @@
       - evince
       - gvim
       - i3lock
+      - i3-wm
+      - libreoffice
       - neovim
       - networkmanager
       - network-manager-applet

@@ -25,5 +25,6 @@
       - batterymon-clone
       - xflux
       - xbindkeys
+      - xkb-switch-git
   become: yes
   become_user: aur_builder
